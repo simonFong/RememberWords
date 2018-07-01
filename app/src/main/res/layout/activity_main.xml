@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.simon.rememberwords.MainActivity">
 
-    <TextView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-</android.support.constraint.ConstraintLayout>
+    <com.yinglan.alphatabs.AlphaTabsIndicator
+        android:id="@+id/alphaIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <com.yinglan.alphatabs.AlphaTabView
+            android:id="@+id/tab_remember"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="5dp"
+            app:tabText="背单词"
+            app:tabTextSize="12sp"
+            app:textColorNormal="#999999"
+            app:textColorSelected="#69dfbc"/>
+
+        <com.yinglan.alphatabs.AlphaTabView
+            android:id="@+id/tab_code_wrong"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="5dp"
+            app:tabText="单词本"
+            app:tabTextSize="12sp"
+            app:textColorNormal="#999999"
+            app:textColorSelected="#69dfbc"/>
+
+        <com.yinglan.alphatabs.AlphaTabView
+            android:id="@+id/tab_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            app:paddingTexwithIcon="5dp"
+            app:tabText="设置"
+            app:tabTextSize="12sp"
+            app:textColorNormal="#999999"
+            app:textColorSelected="#69dfbc"/>
+
+
+    </com.yinglan.alphatabs.AlphaTabsIndicator>
+</LinearLayout>
