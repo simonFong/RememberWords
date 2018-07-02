@@ -30,6 +30,7 @@ dependencies {
     compile 'com.yinglan.alphatabs:library:1.0.8'
     implementation 'com.jakewharton:butterknife:5.1.1'
     compile 'org.greenrobot:greendao:3.2.2' // add library
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
 greendao {

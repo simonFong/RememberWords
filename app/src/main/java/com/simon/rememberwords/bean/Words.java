@@ -15,11 +15,13 @@ public class Words {
     private Long id;
     private String word;
     private String chinese;
-    @Generated(hash = 1900685935)
-    public Words(Long id, String word, String chinese) {
+    private String kind;
+    @Generated(hash = 1125672520)
+    public Words(Long id, String word, String chinese, String kind) {
         this.id = id;
         this.word = word;
         this.chinese = chinese;
+        this.kind = kind;
     }
     @Generated(hash = 796553661)
     public Words() {
@@ -42,4 +44,12 @@ public class Words {
     public void setChinese(String chinese) {
         this.chinese = chinese;
     }
+    public String getKind() {
+        return this.kind;
+    }
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+
 }
