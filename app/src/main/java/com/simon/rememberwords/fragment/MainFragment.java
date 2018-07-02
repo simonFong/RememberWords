@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.simon.rememberwords.R;
@@ -33,8 +35,18 @@ public class MainFragment extends Fragment {
 
     @InjectView(R.id.et_word)
     EditText mEtWord;
-    private String mWrod;
+    @InjectView(R.id.btn_sound)
+    Button mBtnSound;
+    @InjectView(R.id.btn_make_sure)
+    Button mBtnMakeSure;
+    @InjectView(R.id.tv_word)
+    TextView mTvWord;
+    @InjectView(R.id.tv_chinese)
+    TextView mTvChinese;
+    @InjectView(R.id.tv_kind)
+    TextView mTvKind;
     private List<WordBean> mWordBeans;
+    private WordBean mWordBean;
 
     @Nullable
     @Override
@@ -48,9 +60,22 @@ public class MainFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initData();
+        reset();
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    /**
+     * 导入数据
+     */
+    private void initData() {
         mWordBeans = LocalJsonResolutionUtils.parse(getActivity());
 
     }
@@ -69,28 +94,43 @@ public class MainFragment extends Fragment {
     }
 
 
-    @OnClick({R.id.btn_sound, R.id.btn_make_sure})
+    @OnClick({R.id.btn_sound, R.id.btn_make_sure, R.id.btn_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_sound:
-                int i = testRandom1(mWordBeans.size());
-                Log.e("simon", mWordBeans.get(i).toString());
-
-                mWrod = mWordBeans.get(i).getWord();
-
-
+            case R.id.btn_sound://发音
                 Intent intent = new Intent(getActivity(), AudioService.class);
-                intent.putExtra("query", mWrod);
+                intent.putExtra("query", mWordBean.getWord());
                 getActivity().startService(intent);
                 break;
-            case R.id.btn_make_sure:
+            case R.id.btn_make_sure://确定
                 String s = mEtWord.getText().toString().trim();
-                if (s.equals(mWrod)) {
+                if (s.equals(mWordBean.getWord())) {
                     Toast.makeText(getActivity(), "输入正确", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "输入错误", Toast.LENGTH_SHORT).show();
                 }
+
+                mTvWord.setText(mWordBean.getWord());
+                mTvChinese.setText(mWordBean.getChinese());
+                mTvKind.setText(mWordBean.getKind());
+                break;
+            case R.id.btn_next:
+                reset();
                 break;
         }
+    }
+
+    /**
+     * 重置或更新
+     */
+    private void reset() {
+        int i = testRandom1(mWordBeans.size());
+        Log.e("simon", mWordBeans.get(i).toString());
+        mWordBean = mWordBeans.get(i);
+
+        mTvWord.setText("");
+        mTvChinese.setText("");
+        mTvKind.setText("");
+        mEtWord.setText("");
     }
 }
