@@ -3,9 +3,6 @@ package com.simon.rememberwords;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.simon.rememberwords.bean.DaoMaster;
-import com.simon.rememberwords.bean.DaoSession;
-
 /**
  * Created by fengzimin  on  2018/07/01.
  * interface by
