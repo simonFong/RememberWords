@@ -28,7 +28,8 @@ public class AudioService extends Service {
         } else {
             String query = intent.getStringExtra("query");
             // System.out.println("http://dict.youdao.com/dictvoice?audio=" + query);
-            Uri location = Uri.parse("http://dict.youdao.com/dictvoice?audio=" + query);
+//            Uri location = Uri.parse("http://dict.youdao.com/dictvoice?audio=" + query);
+            Uri location = Uri.parse("http://media.shanbay.com/audio/uk/"+query+".mp3");
 
             mp = MediaPlayer.create(this, location);
             // System.out.println("音乐开始播放");
