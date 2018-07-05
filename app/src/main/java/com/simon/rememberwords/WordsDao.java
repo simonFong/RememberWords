@@ -28,6 +28,9 @@ public class WordsDao extends AbstractDao<Words, Long> {
         public final static Property Word = new Property(1, String.class, "word", false, "WORD");
         public final static Property Chinese = new Property(2, String.class, "chinese", false, "CHINESE");
         public final static Property Kind = new Property(3, String.class, "kind", false, "KIND");
+        public final static Property BookName = new Property(4, String.class, "bookName", false, "BOOK_NAME");
+        public final static Property RightNum = new Property(5, int.class, "rightNum", false, "RIGHT_NUM");
+        public final static Property WrongNum = new Property(6, int.class, "wrongNum", false, "WRONG_NUM");
     }
 
 
@@ -43,10 +46,13 @@ public class WordsDao extends AbstractDao<Words, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"WORDS\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"WORD\" TEXT," + // 1: word
                 "\"CHINESE\" TEXT," + // 2: chinese
-                "\"KIND\" TEXT);"); // 3: kind
+                "\"KIND\" TEXT," + // 3: kind
+                "\"BOOK_NAME\" TEXT," + // 4: bookName
+                "\"RIGHT_NUM\" INTEGER NOT NULL ," + // 5: rightNum
+                "\"WRONG_NUM\" INTEGER NOT NULL );"); // 6: wrongNum
     }
 
     /** Drops the underlying database table. */
@@ -78,6 +84,13 @@ public class WordsDao extends AbstractDao<Words, Long> {
         if (kind != null) {
             stmt.bindString(4, kind);
         }
+ 
+        String bookName = entity.getBookName();
+        if (bookName != null) {
+            stmt.bindString(5, bookName);
+        }
+        stmt.bindLong(6, entity.getRightNum());
+        stmt.bindLong(7, entity.getWrongNum());
     }
 
     @Override
@@ -103,6 +116,13 @@ public class WordsDao extends AbstractDao<Words, Long> {
         if (kind != null) {
             stmt.bindString(4, kind);
         }
+ 
+        String bookName = entity.getBookName();
+        if (bookName != null) {
+            stmt.bindString(5, bookName);
+        }
+        stmt.bindLong(6, entity.getRightNum());
+        stmt.bindLong(7, entity.getWrongNum());
     }
 
     @Override
@@ -116,7 +136,10 @@ public class WordsDao extends AbstractDao<Words, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // word
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // chinese
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // kind
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // kind
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // bookName
+            cursor.getInt(offset + 5), // rightNum
+            cursor.getInt(offset + 6) // wrongNum
         );
         return entity;
     }
@@ -127,6 +150,9 @@ public class WordsDao extends AbstractDao<Words, Long> {
         entity.setWord(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setChinese(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setKind(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setBookName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setRightNum(cursor.getInt(offset + 5));
+        entity.setWrongNum(cursor.getInt(offset + 6));
      }
     
     @Override

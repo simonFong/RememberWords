@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.activity.RememberActivity;
 import com.simon.rememberwords.adapter.MainAdapter;
+import com.simon.rememberwords.bean.WordBean;
+import com.simon.rememberwords.bean.Words;
+import com.simon.rememberwords.utils.LocalJsonResolutionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,11 +49,24 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setDatabase();
         initView();
         initData();
     }
 
+    private void setDatabase() {
+        List<WordBean> parse = LocalJsonResolutionUtils.parse(getActivity());
+        for(int i = 0; i < parse.size(); i++) {
+            WordBean wordBean = parse.get(i);
+            Words words = new Words();
+            words.setWord(wordBean.getWord());
+            words.setChinese(wordBean.getChinese());
+            words.setKind(wordBean.getKind());
+        }
+    }
+
     private void initData() {
+
         List<String> books = new ArrayList();
         books.add("Book1");
 
