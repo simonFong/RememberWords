@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.activity.RememberActivity;
 import com.simon.rememberwords.adapter.MainAdapter;
@@ -35,6 +36,8 @@ public class MainFragment extends Fragment {
     RecyclerView recycler;
     private MainAdapter mainAdapter;
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -49,24 +52,14 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setDatabase();
         initView();
         initData();
     }
 
-    private void setDatabase() {
-        List<WordBean> parse = LocalJsonResolutionUtils.parse(getActivity());
-        for(int i = 0; i < parse.size(); i++) {
-            WordBean wordBean = parse.get(i);
-            Words words = new Words();
-            words.setWord(wordBean.getWord());
-            words.setChinese(wordBean.getChinese());
-            words.setKind(wordBean.getKind());
-        }
-    }
+
 
     private void initData() {
-
+        //显示有多少本词典
         List<String> books = new ArrayList();
         books.add("Book1");
 
@@ -81,12 +74,29 @@ public class MainFragment extends Fragment {
         mainAdapter.setOnitemClickListener(new MainAdapter.ItemClickListener() {
             @Override
             public void itemClick(int position) {
-                Intent intent = new Intent(getActivity(), RememberActivity.class);
-                startActivity(intent);
+                String item = mainAdapter.getItem(position);
+                //点击哪个单词本就加载哪个
+                if(item.equals("Book1")) {
+                    setDatabase();
+                    Intent intent = new Intent(getActivity(), RememberActivity.class);
+                    startActivity(intent);
+                }
+
             }
         });
     }
-
+    private void setDatabase() {
+        List<WordBean> parse = LocalJsonResolutionUtils.parse(getActivity());
+        for(int i = 0; i < parse.size(); i++) {
+            WordBean wordBean = parse.get(i);
+            Words words = new Words();
+            words.setWord(wordBean.getWord());
+            words.setChinese(wordBean.getChinese());
+            words.setKind(wordBean.getKind());
+            words.setBookName("Book1");
+            App.getInstances().getDaoSession().insert(words);
+        }
+    }
 
     @Override
     public void onDestroyView() {

@@ -3,18 +3,17 @@ package com.simon.rememberwords.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
-import com.simon.rememberwords.bean.WordBean;
+import com.simon.rememberwords.WordsDao;
+import com.simon.rememberwords.bean.Words;
 import com.simon.rememberwords.service.AudioService;
-import com.simon.rememberwords.utils.LocalJsonResolutionUtils;
 
 import java.util.List;
 import java.util.Random;
@@ -40,25 +39,20 @@ public class RememberActivity extends AppCompatActivity {
     ImageView ivBack;
     @InjectView(R.id.btn_next)
     Button btnNext;
-    private List<WordBean> mWordBeans;
-    private WordBean mWordBean;
+    @InjectView(R.id.iv_states)
+    ImageView mIvStates;
+    private List<Words> mWordsList;
+    private Words mWords;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remember);
         ButterKnife.inject(this);
-        initData();
         reset();
     }
 
-    /**
-     * 导入数据
-     */
-    private void initData() {
-        mWordBeans = LocalJsonResolutionUtils.parse(this);
 
-    }
 
     //生成随机数
     private int testRandom1(int size) {
@@ -72,21 +66,23 @@ public class RememberActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_sound://发音
+
                 Intent intent = new Intent(this, AudioService.class);
-                intent.putExtra("query", mWordBean.getWord());
+                intent.putExtra("query", mWords.getWord());
                 this.startService(intent);
                 break;
             case R.id.btn_make_sure://确定
                 String s = mEtWord.getText().toString().trim();
-                if (s.equals(mWordBean.getWord())) {
-                    Toast.makeText(this, "输入正确", Toast.LENGTH_SHORT).show();
+                mIvStates.setVisibility(View.VISIBLE);
+                if (s.equals(mWords.getWord())) {
+                    mIvStates.setBackgroundResource(R.mipmap.chenggong);
                 } else {
-                    Toast.makeText(this, "输入错误", Toast.LENGTH_SHORT).show();
+                    mIvStates.setBackgroundResource(R.mipmap.shibai);
                 }
 
-                mTvWord.setText(mWordBean.getWord());
-                mTvChinese.setText(mWordBean.getChinese());
-                mTvKind.setText(mWordBean.getKind());
+                mTvWord.setText(mWords.getWord());
+                mTvChinese.setText(mWords.getChinese());
+                mTvKind.setText(mWords.getKind());
                 break;
             case R.id.btn_next:
                 reset();
@@ -101,14 +97,16 @@ public class RememberActivity extends AppCompatActivity {
      * 重置或更新
      */
     private void reset() {
-        int i = testRandom1(mWordBeans.size());
-        Log.e("simon", mWordBeans.get(i).toString());
-        mWordBean = mWordBeans.get(i);
+        WordsDao wordsDao = App.getInstances().getDaoSession().getWordsDao();
+        mWordsList = wordsDao.loadAll();
+        int i = testRandom1(mWordsList.size());
+        mWords = mWordsList.get(i);
 
         mTvWord.setText("");
         mTvChinese.setText("");
         mTvKind.setText("");
         mEtWord.setText("");
+        mIvStates.setVisibility(View.INVISIBLE);
     }
 
 

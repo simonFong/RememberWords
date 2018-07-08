@@ -37,17 +37,17 @@
             app:textColorNormal="#999999"
             app:textColorSelected="#69dfbc"/>
 
-        <com.yinglan.alphatabs.AlphaTabView
-            android:id="@+id/tab_code_wrong"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="5dp"
-            app:paddingTexwithIcon="5dp"
-            app:tabText="单词本"
-            app:tabTextSize="12sp"
-            app:textColorNormal="#999999"
-            app:textColorSelected="#69dfbc"/>
+        <!--<com.yinglan.alphatabs.AlphaTabView-->
+            <!--android:id="@+id/tab_code_wrong"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:padding="5dp"-->
+            <!--app:paddingTexwithIcon="5dp"-->
+            <!--app:tabText="单词本"-->
+            <!--app:tabTextSize="12sp"-->
+            <!--app:textColorNormal="#999999"-->
+            <!--app:textColorSelected="#69dfbc"/>-->
 
         <com.yinglan.alphatabs.AlphaTabView
             android:id="@+id/tab_setting"

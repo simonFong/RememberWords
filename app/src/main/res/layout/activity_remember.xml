@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,13 +16,13 @@
             android:layout_width="30dp"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:src="@mipmap/fanhui" />
+            android:src="@mipmap/fanhui"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="背单词" />
+            android:text="背单词"/>
     </RelativeLayout>
 
     <FrameLayout
@@ -39,8 +40,13 @@
                 android:id="@+id/btn_sound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发音" />
+                android:text="发音"/>
 
+            <ImageView
+                android:id="@+id/iv_states"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                tools:src="@mipmap/chenggong"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -52,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="name"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"/>
 
                 <TextView
                     android:id="@+id/tv_kind"
@@ -60,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="n"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"/>
 
                 <TextView
                     android:id="@+id/tv_chinese"
@@ -69,7 +75,7 @@
                     android:layout_marginLeft="10dp"
 
                     android:text="名字"
-                    android:textSize="25sp" />
+                    android:textSize="25sp"/>
 
 
             </LinearLayout>
@@ -78,10 +84,10 @@
                 android:id="@+id/et_word"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:hint="请填写你所听到的单词"
-                android:inputType="textUri" />
+                android:inputType="textUri"/>
 
 
             <LinearLayout
@@ -93,14 +99,14 @@
                     android:id="@+id/btn_make_sure"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="确定" />
+                    android:text="确定"/>
 
 
                 <Button
                     android:id="@+id/btn_next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="下一个" />
+                    android:text="下一个"/>
 
             </LinearLayout>
         </LinearLayout>

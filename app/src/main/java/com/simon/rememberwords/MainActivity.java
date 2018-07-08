@@ -8,7 +8,6 @@ import com.simon.rememberwords.adapter.CommonPagerAdapter;
 import com.simon.rememberwords.base.BaseActivity;
 import com.simon.rememberwords.fragment.MainFragment;
 import com.simon.rememberwords.fragment.SettingFragment;
-import com.simon.rememberwords.fragment.WrongWordsFragment;
 import com.yinglan.alphatabs.AlphaTabView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
 
@@ -24,8 +23,8 @@ public class MainActivity extends BaseActivity {
     ViewPager mViewpager;
     @InjectView(R.id.tab_remember)
     AlphaTabView mTabRemember;
-    @InjectView(R.id.tab_code_wrong)
-    AlphaTabView mTabCodeWrong;
+//    @InjectView(R.id.tab_code_wrong)
+//    AlphaTabView mTabCodeWrong;
     @InjectView(R.id.tab_setting)
     AlphaTabView mTabSetting;
     @InjectView(R.id.alphaIndicator)
@@ -42,7 +41,7 @@ public class MainActivity extends BaseActivity {
     private void initView() {
         List<Fragment> mFragments = new ArrayList<>();
         mFragments.add(new MainFragment());
-        mFragments.add(new WrongWordsFragment());
+//        mFragments.add(new WrongWordsFragment());
         mFragments.add(new SettingFragment());
         CommonPagerAdapter mCommonPagerAdapter =
                 new CommonPagerAdapter(getSupportFragmentManager(), mFragments);

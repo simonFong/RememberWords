@@ -67,4 +67,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         this.mItemClickListener = itemClickListener;
 
     }
+
+    public String getItem(int position){
+        String s = mData.get(position);
+        return s;
+
+    }
 }
