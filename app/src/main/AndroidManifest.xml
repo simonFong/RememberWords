@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.simon.rememberwords">
+          package="com.simon.rememberwords">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 获取WiFi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 获取网络信息状态，如当前的网络连接是否有效 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 读取手机状态 phone group -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 往SDCard读写数据权限   storage group -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".App"
@@ -12,17 +21,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <service android:name=".service.AudioService" />
+        <service android:name=".service.AudioService"/>
 
-        <activity android:name=".activity.RememberActivity"></activity>
+        <activity android:name=".activity.RememberActivity"/>
+        <activity android:name=".activity.NewWordActivity"/>
     </application>
 
 </manifest>

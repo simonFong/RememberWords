@@ -9,8 +9,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk{
+            abiFilters "armeabi ","armeabi-v7a"
 
+        }
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
     }
     buildTypes {
         release {
@@ -18,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets.main.jniLibs.srcDirs = ['libs']
 }
 
 dependencies {
@@ -29,10 +34,21 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.yinglan.alphatabs:library:1.0.8'
     implementation 'com.jakewharton:butterknife:5.1.1'
-    compile 'org.greenrobot:greendao:3.2.2' // add library
+    compile 'org.greenrobot:greendao:3.2.2'
+    // add library
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     compile 'com.android.support:cardview-v7:27.1.1'
+    implementation files('libs/YoudaoBase.jar')
+    implementation files('libs/YoudaoTranslateOffline.jar')
+    implementation files('libs/YoudaoTranslateOnline.jar')
+
+    //okgo
+    compile 'com.lzy.net:okgo:+'
+    compile 'com.lzy.net:okrx2:+'
+    compile 'io.reactivex.rxjava2:rxjava:2.0.1'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+
 }
 
 greendao {

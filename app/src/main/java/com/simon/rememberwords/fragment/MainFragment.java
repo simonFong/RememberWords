@@ -13,11 +13,14 @@ import android.view.ViewGroup;
 
 import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
+import com.simon.rememberwords.activity.NewWordActivity;
 import com.simon.rememberwords.activity.RememberActivity;
 import com.simon.rememberwords.adapter.MainAdapter;
 import com.simon.rememberwords.bean.WordBean;
 import com.simon.rememberwords.bean.Words;
 import com.simon.rememberwords.utils.LocalJsonResolutionUtils;
+import com.simon.rememberwords.utils.OtherSpDataHelper;
+import com.simon.rememberwords.weight.Titlerbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +37,10 @@ public class MainFragment extends Fragment {
 
     @InjectView(R.id.recycler)
     RecyclerView recycler;
+    @InjectView(R.id.titlebar)
+    Titlerbar mTitlebar;
     private MainAdapter mainAdapter;
-
+    private List<String> mBookNameList;
 
 
     @Nullable
@@ -52,42 +57,53 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //显示有多少本词典
+        List<String> books = new ArrayList();
+        books.add("Book1");
+        OtherSpDataHelper.saveBookNameList(books);
+
         initView();
         initData();
     }
 
 
-
     private void initData() {
-        //显示有多少本词典
-        List<String> books = new ArrayList();
-        books.add("Book1");
 
-        mainAdapter.setData(books);
+        mBookNameList = OtherSpDataHelper.getBookNameList();
+        mainAdapter.setData(mBookNameList);
 
     }
 
     private void initView() {
-        recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mTitlebar.mBackIv.setVisibility(View.GONE);
+        mTitlebar.mRightTextTv.setText("新建");
+        mTitlebar.mRightTextTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), NewWordActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        recycler.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager
+                .VERTICAL, false));
         mainAdapter = new MainAdapter();
         recycler.setAdapter(mainAdapter);
         mainAdapter.setOnitemClickListener(new MainAdapter.ItemClickListener() {
             @Override
             public void itemClick(int position) {
                 String item = mainAdapter.getItem(position);
-                //点击哪个单词本就加载哪个
-                if(item.equals("Book1")) {
-                    setDatabase();
-                    Intent intent = new Intent(getActivity(), RememberActivity.class);
-                    startActivity(intent);
-                }
+                Intent newIntent = RememberActivity.getNewIntent(getActivity(), item);
+                startActivity(newIntent);
+
 
             }
         });
     }
+
     private void setDatabase() {
         List<WordBean> parse = LocalJsonResolutionUtils.parse(getActivity());
-        for(int i = 0; i < parse.size(); i++) {
+        for (int i = 0; i < parse.size(); i++) {
             WordBean wordBean = parse.get(i);
             Words words = new Words();
             words.setWord(wordBean.getWord());

@@ -1,9 +1,10 @@
-package com.simon.rememberwords;
+package com.simon.rememberwords.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
+import com.simon.rememberwords.R;
 import com.simon.rememberwords.adapter.CommonPagerAdapter;
 import com.simon.rememberwords.base.BaseActivity;
 import com.simon.rememberwords.fragment.MainFragment;
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         initView();

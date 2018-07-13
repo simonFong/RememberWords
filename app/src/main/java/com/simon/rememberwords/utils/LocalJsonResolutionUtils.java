@@ -89,8 +89,7 @@ public class LocalJsonResolutionUtils {
             String word = jsonObject.get("word").getAsString();
             String chinese = jsonObject.get("chinese").getAsString();
             String kind = jsonObject.get("kind").getAsString();
-            String replaceWord = word.replace(" ", "");
-            WordBean wordBean = new WordBean(replaceWord , chinese, kind);
+            WordBean wordBean = new WordBean(word , chinese, kind);
             wordBeans.add(wordBean);
         }
         return wordBeans;

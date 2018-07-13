@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Titlerbar">
+        <attr name="title" format="string"/>
+        <attr name="right_text" format="string"/>
+        <attr name="bg" format="color"/>
+        <attr name="show_right_text" format="boolean"/>
+    </declare-styleable>
+</resources>
