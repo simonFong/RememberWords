@@ -106,7 +106,6 @@ public class RememberActivity extends BaseActivity {
         return i;
     }
 
-
     @OnClick({R.id.btn_sound, R.id.btn_make_sure, R.id.btn_next, R.id.iv_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {

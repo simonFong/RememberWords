@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.adapter.TranslateAdapter;
 import com.simon.rememberwords.base.BaseActivity;
+import com.simon.rememberwords.dialog.SelectBookDialog;
 import com.simon.rememberwords.utils.YoudaoWrapper;
 import com.youdao.sdk.ydtranslate.Translate;
 
@@ -95,7 +96,14 @@ public class NewWordActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_add:
+                SelectBookDialog selectBookDialog = new SelectBookDialog(this);
 
+                List<String> strings = new ArrayList<>();
+                strings.add("dsflkjasdf");
+                strings.add("d");
+                strings.add("asdflksajdflkasdjflkasjdf");
+                selectBookDialog.setData(strings);
+                selectBookDialog.show();
                 break;
         }
     }
