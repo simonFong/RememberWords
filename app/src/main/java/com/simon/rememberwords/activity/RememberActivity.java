@@ -82,12 +82,7 @@ public class RememberActivity extends BaseActivity {
         Intent intent = getIntent();
         mBook = intent.getStringExtra("book");
         mTitlebar.setTitle(mBook);
-        mTitlebar.mBackIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        mTitlebar.leftExit(this);
     }
 
     private void initRecycler() {

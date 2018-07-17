@@ -14,12 +14,20 @@ public class WordBean {
 
     private String word;
     private String explain;
-    private String kind;
+    private String bookName;
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
+    }
 
     public WordBean(String word, String explain, String kind) {
         this.word = word;
         this.explain = explain;
-        this.kind = kind;
+        this.bookName = kind;
     }
 
     public String getWord() {
@@ -38,20 +46,13 @@ public class WordBean {
         this.explain = explain;
     }
 
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
 
     @Override
     public String toString() {
         return "WordBean{" +
                 "word='" + word + '\'' +
                 ", explain='" + explain + '\'' +
-                ", kind='" + kind + '\'' +
+                ", bookName='" + bookName + '\'' +
                 '}';
     }
 }

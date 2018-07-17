@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
             WordBean wordBean = parse.get(i);
             Word word = new Word();
             word.setWord(wordBean.getWord());
-            word.setBookName("Book1");
+            word.setBookName(wordBean.getBookName());
             App.getInstances().getDaoSession().insertOrReplace(word);
         }
     }

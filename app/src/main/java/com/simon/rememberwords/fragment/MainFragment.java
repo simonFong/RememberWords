@@ -52,14 +52,12 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initView();
         initData();
     }
 
 
     private void initData() {
-
         mBookNameList = OtherSpDataHelper.getBookNameList();
         mainAdapter.setData(mBookNameList);
 

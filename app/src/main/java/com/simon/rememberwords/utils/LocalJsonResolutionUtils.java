@@ -88,7 +88,7 @@ public class LocalJsonResolutionUtils {
             JsonObject jsonObject = iterator.next().getAsJsonObject();
             String word = jsonObject.get("word").getAsString();
             String explain = jsonObject.get("explain").getAsString();
-            String kind = jsonObject.get("kind").getAsString();
+            String kind = jsonObject.get("bookName").getAsString();
             WordBean wordBean = new WordBean(word , explain, kind);
             wordBeans.add(wordBean);
         }
