@@ -11,14 +11,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
+import com.simon.rememberwords.WordDao;
 import com.simon.rememberwords.adapter.TranslateAdapter;
 import com.simon.rememberwords.base.BaseActivity;
 import com.simon.rememberwords.bean.Word;
 import com.simon.rememberwords.service.AudioService;
 import com.simon.rememberwords.utils.YoudaoWrapper;
 import com.simon.rememberwords.weight.Titlerbar;
-import com.youdao.sdk.ydonlinetranslate.Translator;
 import com.youdao.sdk.ydtranslate.Translate;
 
 import java.util.ArrayList;
@@ -51,11 +52,10 @@ public class RememberActivity extends BaseActivity {
     Button mBtnMakeSure;
     @InjectView(R.id.btn_next)
     Button mBtnNext;
-    private List<Word> mWordsList;
     private Word mWords;
-    private Translator translator;
     private TranslateAdapter mTranslateAdapter;
     private String mBook;
+    private List<Word> mDataList;
 
     /**
      * @param context
@@ -75,7 +75,14 @@ public class RememberActivity extends BaseActivity {
         ButterKnife.inject(this);
         initView();
         initRecycler();
+        initData();
         reset();
+    }
+
+    private void initData() {
+        WordDao wordDao = App.getInstances().getDaoSession().getWordDao();
+        mDataList = wordDao.queryBuilder().where(WordDao.Properties.BookName.eq(mBook))
+                .list();
     }
 
     private void initView() {
@@ -150,8 +157,8 @@ public class RememberActivity extends BaseActivity {
      */
     private void reset() {
 
-        int i = testRandom1(mWordsList.size());
-        mWords = mWordsList.get(i);
+        int i = testRandom1(mDataList.size());
+        mWords = mDataList.get(i);
         mTvWord.setText("");
         mTranslateAdapter.setData(new ArrayList<String>());
         mEtWord.setText("");
