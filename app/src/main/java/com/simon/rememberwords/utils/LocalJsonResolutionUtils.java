@@ -75,7 +75,7 @@ public class LocalJsonResolutionUtils {
         }
     }
 
-    // 解释
+    // 解析
     public static ArrayList<WordBean> parse(Context context) {
 
         JsonReader reader = new JsonReader(getJsonReader(context));
@@ -87,9 +87,9 @@ public class LocalJsonResolutionUtils {
         while (iterator.hasNext()) {
             JsonObject jsonObject = iterator.next().getAsJsonObject();
             String word = jsonObject.get("word").getAsString();
-            String chinese = jsonObject.get("chinese").getAsString();
+            String explain = jsonObject.get("explain").getAsString();
             String kind = jsonObject.get("kind").getAsString();
-            WordBean wordBean = new WordBean(word , chinese, kind);
+            WordBean wordBean = new WordBean(word , explain, kind);
             wordBeans.add(wordBean);
         }
         return wordBeans;

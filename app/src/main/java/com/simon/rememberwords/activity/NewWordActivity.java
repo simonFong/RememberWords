@@ -1,5 +1,7 @@
 package com.simon.rememberwords.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +15,8 @@ import android.widget.Toast;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.adapter.TranslateAdapter;
 import com.simon.rememberwords.base.BaseActivity;
-import com.simon.rememberwords.dialog.SelectBookDialog;
 import com.simon.rememberwords.utils.YoudaoWrapper;
+import com.simon.rememberwords.weight.Titlerbar;
 import com.youdao.sdk.ydtranslate.Translate;
 
 import java.util.ArrayList;
@@ -44,7 +46,25 @@ public class NewWordActivity extends BaseActivity {
     RecyclerView mRecycler;
     @InjectView(R.id.btn_add)
     Button mBtnAdd;
+    @InjectView(R.id.titlebar)
+    Titlerbar mTitlebar;
     private TranslateAdapter mAdapter;
+    private String mBookname;
+    private String mWord;
+    private Translate mTranslate;
+
+
+    /**
+     * @param context
+     * @param bookname 单词本名称
+     * @return
+     */
+    public static Intent getNewIntent(Context context, String bookname) {
+        Intent intent = new Intent(context, NewWordActivity.class);
+        intent.putExtra("bookname", bookname);
+        return intent;
+
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +72,19 @@ public class NewWordActivity extends BaseActivity {
         setContentView(R.layout.activity_new_word);
         ButterKnife.inject(this);
         mBtnAdd.setClickable(false);
+        initData();
+        initView();
         initRecycler();
+    }
+
+    private void initData() {
+        Intent intent = getIntent();
+        mBookname = intent.getStringExtra("bookname");
+    }
+
+    private void initView() {
+        mTitlebar.leftExit(this);
+
     }
 
     private void initRecycler() {
@@ -67,17 +99,18 @@ public class NewWordActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_cheak:
-                final String s = mEtWord.getText().toString();
-                if (s.equals("")) {
+                mWord = mEtWord.getText().toString();
+                if (mWord.equals("")) {
                     Toast.makeText(NewWordActivity.this, "请输入单词", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                YoudaoWrapper.newInstance().translate(s).setOnCallBack(new YoudaoWrapper.CallBack
-                        () {
+                YoudaoWrapper.newInstance().translate(mWord).setOnCallBack(new YoudaoWrapper
+                        .CallBack() {
 
                     @Override
                     public void onSingleCallBack(Translate translate) {
-                        mTvWord.setText(s);
+                        mTvWord.setText(mWord);
+                        mTranslate = translate;
                         if (translate.getExplains() != null) {
                             mAdapter.setData(translate.getExplains());
                             mBtnAdd.setClickable(true);
@@ -96,14 +129,7 @@ public class NewWordActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_add:
-                SelectBookDialog selectBookDialog = new SelectBookDialog(this);
 
-                List<String> strings = new ArrayList<>();
-                strings.add("dsflkjasdf");
-                strings.add("d");
-                strings.add("asdflksajdflkasdjflkasjdf");
-                selectBookDialog.setData(strings);
-                selectBookDialog.show();
                 break;
         }
     }

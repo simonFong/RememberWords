@@ -11,12 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
-import com.simon.rememberwords.WordsDao;
 import com.simon.rememberwords.adapter.TranslateAdapter;
 import com.simon.rememberwords.base.BaseActivity;
-import com.simon.rememberwords.bean.Words;
+import com.simon.rememberwords.bean.Word;
 import com.simon.rememberwords.service.AudioService;
 import com.simon.rememberwords.utils.YoudaoWrapper;
 import com.simon.rememberwords.weight.Titlerbar;
@@ -53,8 +51,8 @@ public class RememberActivity extends BaseActivity {
     Button mBtnMakeSure;
     @InjectView(R.id.btn_next)
     Button mBtnNext;
-    private List<Words> mWordsList;
-    private Words mWords;
+    private List<Word> mWordsList;
+    private Word mWords;
     private Translator translator;
     private TranslateAdapter mTranslateAdapter;
     private String mBook;
@@ -132,8 +130,7 @@ public class RememberActivity extends BaseActivity {
                         }
 
                         if (translate.getExplains() == null) {
-                            mTvChinese.setText(mWords.getChinese());
-                            mTvKind.setText(mWords.getKind());
+
                         } else {
                             mTranslateAdapter.setData(translate.getExplains());
 
@@ -157,9 +154,7 @@ public class RememberActivity extends BaseActivity {
      * 重置或更新
      */
     private void reset() {
-        WordsDao wordsDao = App.getInstances().getDaoSession().getWordsDao();
-        mWordsList = wordsDao.queryBuilder().where(WordsDao.Properties.BookName.eq(mBook))
-                .list();
+
         int i = testRandom1(mWordsList.size());
         mWords = mWordsList.get(i);
         mTvWord.setText("");

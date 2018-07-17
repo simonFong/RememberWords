@@ -11,18 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
-import com.simon.rememberwords.activity.NewWordActivity;
 import com.simon.rememberwords.activity.RememberActivity;
+import com.simon.rememberwords.activity.SelectBookActivity;
 import com.simon.rememberwords.adapter.MainAdapter;
-import com.simon.rememberwords.bean.WordBean;
-import com.simon.rememberwords.bean.Words;
-import com.simon.rememberwords.utils.LocalJsonResolutionUtils;
 import com.simon.rememberwords.utils.OtherSpDataHelper;
 import com.simon.rememberwords.weight.Titlerbar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -57,10 +52,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //显示有多少本词典
-        List<String> books = new ArrayList();
-        books.add("Book1");
-        OtherSpDataHelper.saveBookNameList(books);
 
         initView();
         initData();
@@ -76,11 +67,11 @@ public class MainFragment extends Fragment {
 
     private void initView() {
         mTitlebar.mBackIv.setVisibility(View.GONE);
-        mTitlebar.mRightTextTv.setText("新建");
+        mTitlebar.mRightTextTv.setText("自定义");
         mTitlebar.mRightTextTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), NewWordActivity.class);
+                Intent intent = new Intent(getActivity(), SelectBookActivity.class);
                 startActivity(intent);
             }
         });
@@ -101,18 +92,7 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void setDatabase() {
-        List<WordBean> parse = LocalJsonResolutionUtils.parse(getActivity());
-        for (int i = 0; i < parse.size(); i++) {
-            WordBean wordBean = parse.get(i);
-            Words words = new Words();
-            words.setWord(wordBean.getWord());
-            words.setChinese(wordBean.getChinese());
-            words.setKind(wordBean.getKind());
-            words.setBookName("Book1");
-            App.getInstances().getDaoSession().insert(words);
-        }
-    }
+
 
     @Override
     public void onDestroyView() {

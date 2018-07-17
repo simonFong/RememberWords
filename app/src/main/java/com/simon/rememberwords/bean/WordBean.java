@@ -13,12 +13,12 @@ public class WordBean {
      */
 
     private String word;
-    private String chinese;
+    private String explain;
     private String kind;
 
-    public WordBean(String word, String chinese, String kind) {
+    public WordBean(String word, String explain, String kind) {
         this.word = word;
-        this.chinese = chinese;
+        this.explain = explain;
         this.kind = kind;
     }
 
@@ -30,12 +30,12 @@ public class WordBean {
         this.word = word;
     }
 
-    public String getChinese() {
-        return chinese;
+    public String getExplain() {
+        return explain;
     }
 
-    public void setChinese(String chinese) {
-        this.chinese = chinese;
+    public void setExplain(String explain) {
+        this.explain = explain;
     }
 
     public String getKind() {
@@ -50,7 +50,7 @@ public class WordBean {
     public String toString() {
         return "WordBean{" +
                 "word='" + word + '\'' +
-                ", chinese='" + chinese + '\'' +
+                ", explain='" + explain + '\'' +
                 ", kind='" + kind + '\'' +
                 '}';
     }

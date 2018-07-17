@@ -33,6 +33,7 @@
 
         <activity android:name=".activity.RememberActivity"/>
         <activity android:name=".activity.NewWordActivity"/>
+        <activity android:name=".activity.SelectBookActivity"/>
     </application>
 
 </manifest>

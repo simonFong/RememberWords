@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
     <com.simon.rememberwords.weight.Titlerbar
+        android:id="@+id/titlebar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         app:show_right_text="false"

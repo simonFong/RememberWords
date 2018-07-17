@@ -1,5 +1,6 @@
 package com.simon.rememberwords.weight;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.Nullable;
@@ -60,5 +61,14 @@ public class Titlerbar extends LinearLayout {
 
     public void setTitle(String title) {
         mTitleTv.setText(title);
+    }
+
+    public void leftExit(final Activity activity){
+        mBackIv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.finish();
+            }
+        });
     }
 }

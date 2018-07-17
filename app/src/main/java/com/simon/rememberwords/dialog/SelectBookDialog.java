@@ -46,6 +46,12 @@ public class SelectBookDialog extends Dialog {
             public void onClick(View v) {
                 AddBookNameDialog addBookNameDialog = new AddBookNameDialog(mContext);
                 addBookNameDialog.show();
+                addBookNameDialog.setOnClickListener(new AddBookNameDialog.OnClickListener() {
+                    @Override
+                    public void sureClick(String bookname) {
+
+                    }
+                });
             }
         });
         //确定
