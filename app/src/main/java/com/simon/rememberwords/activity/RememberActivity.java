@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
@@ -156,7 +157,11 @@ public class RememberActivity extends BaseActivity {
      * 重置或更新
      */
     private void reset() {
-
+        if (mDataList == null || mDataList.size() == 0) {
+            Toast.makeText(RememberActivity.this, "该单词本没有添加单词", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
         int i = testRandom1(mDataList.size());
         mWords = mDataList.get(i);
         mTvWord.setText("");

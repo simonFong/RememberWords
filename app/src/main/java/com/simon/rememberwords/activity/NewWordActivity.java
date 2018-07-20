@@ -12,9 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
+import com.simon.rememberwords.WordDao;
 import com.simon.rememberwords.adapter.TranslateAdapter;
 import com.simon.rememberwords.base.BaseActivity;
+import com.simon.rememberwords.bean.Word;
+import com.simon.rememberwords.bean.WordBean;
 import com.simon.rememberwords.utils.YoudaoWrapper;
 import com.simon.rememberwords.weight.Titlerbar;
 import com.youdao.sdk.ydtranslate.Translate;
@@ -129,8 +133,20 @@ public class NewWordActivity extends BaseActivity {
                 });
                 break;
             case R.id.btn_add:
-
+                addWord();
                 break;
         }
+    }
+
+    private void addWord() {
+        WordBean wordBean = new WordBean(mWord, mTranslate.getExplains().get(0), mBookname);
+        Word word = new Word();
+        word.setWord(wordBean.getWord());
+        word.setBookName(wordBean.getBookName());
+        word.setExplain(wordBean.getExplain());
+        WordDao wordDao = App.getInstances().getDaoSession().getWordDao();
+        wordDao.insertOrReplace(word);
+
+        Toast.makeText(NewWordActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
     }
 }

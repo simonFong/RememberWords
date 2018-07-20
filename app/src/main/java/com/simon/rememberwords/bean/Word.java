@@ -1,14 +1,23 @@
 package com.simon.rememberwords.bean;
 
 import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 
 /**
  * Created by fengzimin  on  2018/07/01.
  * interface by
  */
-@Entity
+
+
+
+@Entity(
+        // Define indexes spanning multiple columns here.
+        indexes = {
+                @Index(value = "word DESC, bookName DESC", unique = true)
+        }
+)
 public class Word {
 
     @Id(autoincrement = true)

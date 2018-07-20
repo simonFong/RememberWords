@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.simon.rememberwords.Common;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.adapter.MainAdapter;
 import com.simon.rememberwords.base.BaseActivity;
@@ -54,6 +55,7 @@ public class SelectBookActivity extends BaseActivity {
                     public void sureClick(String bookname) {
                         mBookNameList.add(bookname);
                         OtherSpDataHelper.saveBookNameList(mBookNameList);
+                        setResult(Common.NEW_BOOK);
                         initData();
                         addBookNameDialog.dismiss();
                     }

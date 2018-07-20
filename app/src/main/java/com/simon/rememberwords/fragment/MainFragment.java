@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.simon.rememberwords.Common;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.activity.RememberActivity;
 import com.simon.rememberwords.activity.SelectBookActivity;
@@ -36,7 +37,6 @@ public class MainFragment extends Fragment {
     Titlerbar mTitlebar;
     private MainAdapter mainAdapter;
     private List<String> mBookNameList;
-
 
     @Nullable
     @Override
@@ -70,7 +70,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), SelectBookActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Common.NEW_WORD);
             }
         });
 
@@ -85,12 +85,17 @@ public class MainFragment extends Fragment {
                 Intent newIntent = RememberActivity.getNewIntent(getActivity(), item);
                 startActivity(newIntent);
 
-
             }
         });
     }
 
-
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Common.NEW_WORD && resultCode == Common.NEW_BOOK) {
+            initData();
+        }
+    }
 
     @Override
     public void onDestroyView() {

@@ -52,7 +52,7 @@ public class MainActivity extends BaseActivity {
 
     private void setDatabase() {
         List<String> books = new ArrayList();
-        books.add("Book1");
+        books.add("book1");
         OtherSpDataHelper.saveBookNameList(books);
 
         List<WordBean> parse = LocalJsonResolutionUtils.parse(MainActivity.this);
@@ -61,6 +61,7 @@ public class MainActivity extends BaseActivity {
             Word word = new Word();
             word.setWord(wordBean.getWord());
             word.setBookName(wordBean.getBookName());
+            word.setExplain(wordBean.getExplain());
             App.getInstances().getDaoSession().insertOrReplace(word);
         }
     }
