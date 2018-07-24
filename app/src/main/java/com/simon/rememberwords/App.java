@@ -3,6 +3,8 @@ package com.simon.rememberwords;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.simon.rememberwords.db.DaoMaster;
+import com.simon.rememberwords.db.DaoSession;
 import com.simon.rememberwords.utils.PrefUtil;
 import com.youdao.sdk.app.YouDaoApplication;
 

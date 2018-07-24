@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
-import com.simon.rememberwords.WordDao;
+import com.simon.rememberwords.db.WordDao;
 import com.simon.rememberwords.adapter.TranslateAdapter;
 import com.simon.rememberwords.base.BaseActivity;
 import com.simon.rememberwords.bean.Word;

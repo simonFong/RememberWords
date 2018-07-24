@@ -4,16 +4,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
-import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.adapter.CommonPagerAdapter;
 import com.simon.rememberwords.base.BaseActivity;
-import com.simon.rememberwords.bean.Word;
 import com.simon.rememberwords.bean.WordBean;
 import com.simon.rememberwords.fragment.MainFragment;
 import com.simon.rememberwords.fragment.SettingFragment;
+import com.simon.rememberwords.utils.DaoHelper;
 import com.simon.rememberwords.utils.LocalJsonResolutionUtils;
-import com.simon.rememberwords.utils.OtherSpDataHelper;
 import com.yinglan.alphatabs.AlphaTabView;
 import com.yinglan.alphatabs.AlphaTabsIndicator;
 
@@ -51,19 +49,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setDatabase() {
-        List<String> books = new ArrayList();
-        books.add("book1");
-        OtherSpDataHelper.saveBookNameList(books);
-
         List<WordBean> parse = LocalJsonResolutionUtils.parse(MainActivity.this);
-        for (int i = 0; i < parse.size(); i++) {
-            WordBean wordBean = parse.get(i);
-            Word word = new Word();
-            word.setWord(wordBean.getWord());
-            word.setBookName(wordBean.getBookName());
-            word.setExplain(wordBean.getExplain());
-            App.getInstances().getDaoSession().insertOrReplace(word);
-        }
+        DaoHelper.insertWord(parse);
     }
 
     private void initView() {

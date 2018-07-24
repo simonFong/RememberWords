@@ -16,7 +16,8 @@ import com.simon.rememberwords.R;
 import com.simon.rememberwords.activity.RememberActivity;
 import com.simon.rememberwords.activity.SelectBookActivity;
 import com.simon.rememberwords.adapter.MainAdapter;
-import com.simon.rememberwords.utils.OtherSpDataHelper;
+import com.simon.rememberwords.bean.Book;
+import com.simon.rememberwords.utils.DaoHelper;
 import com.simon.rememberwords.weight.Titlerbar;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class MainFragment extends Fragment {
     @InjectView(R.id.titlebar)
     Titlerbar mTitlebar;
     private MainAdapter mainAdapter;
-    private List<String> mBookNameList;
+    private List<Book> mBooksList;
 
     @Nullable
     @Override
@@ -58,8 +59,8 @@ public class MainFragment extends Fragment {
 
 
     private void initData() {
-        mBookNameList = OtherSpDataHelper.getBookNameList();
-        mainAdapter.setData(mBookNameList);
+        mBooksList = DaoHelper.getBooksList();
+        mainAdapter.setData(mBooksList);
 
     }
 
@@ -81,9 +82,9 @@ public class MainFragment extends Fragment {
         mainAdapter.setOnitemClickListener(new MainAdapter.ItemClickListener() {
             @Override
             public void itemClick(int position) {
-                String item = mainAdapter.getItem(position);
-                Intent newIntent = RememberActivity.getNewIntent(getActivity(), item);
-                startActivity(newIntent);
+                Book item = mainAdapter.getItem(position);
+                Intent newIntent = RememberActivity.getNewIntent(getActivity(), item.getBookname());
+                startActivityForResult(newIntent,Common.REMEMBER_ACTIVITY);
 
             }
         });
@@ -93,6 +94,9 @@ public class MainFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Common.NEW_WORD && resultCode == Common.NEW_BOOK) {
+            initData();
+        }
+        if(requestCode == Common.REMEMBER_ACTIVITY) {
             initData();
         }
     }

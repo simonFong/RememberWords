@@ -52,7 +52,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 1 //数据库版本号
-    daoPackage 'com.simon.rememberwords'// 设置DaoMaster、DaoSession、Dao 包名
+    schemaVersion 2 //数据库版本号
+    daoPackage 'com.simon.rememberwords.db'// 设置DaoMaster、DaoSession、Dao 包名
     targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
 }

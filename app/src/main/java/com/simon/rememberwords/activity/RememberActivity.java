@@ -12,13 +12,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.simon.rememberwords.App;
 import com.simon.rememberwords.R;
-import com.simon.rememberwords.WordDao;
 import com.simon.rememberwords.adapter.TranslateAdapter;
 import com.simon.rememberwords.base.BaseActivity;
 import com.simon.rememberwords.bean.Word;
 import com.simon.rememberwords.service.AudioService;
+import com.simon.rememberwords.utils.DaoHelper;
 import com.simon.rememberwords.utils.YoudaoWrapper;
 import com.simon.rememberwords.weight.Titlerbar;
 import com.youdao.sdk.ydtranslate.Translate;
@@ -81,9 +80,7 @@ public class RememberActivity extends BaseActivity {
     }
 
     private void initData() {
-        WordDao wordDao = App.getInstances().getDaoSession().getWordDao();
-        mDataList = wordDao.queryBuilder().where(WordDao.Properties.BookName.eq(mBook))
-                .list();
+        mDataList = DaoHelper.getWordListFromBook(mBook);
     }
 
     private void initView() {
@@ -100,11 +97,29 @@ public class RememberActivity extends BaseActivity {
         mRecycler.setAdapter(mTranslateAdapter);
     }
 
-    //生成随机数
+    /**
+     * 根据权重显示单词的概率
+     *
+     * @param size
+     * @return
+     */
     private int testRandom1(int size) {
         Random random = new Random();
-        int i = random.nextInt(size);
-        return i;
+        int randomNum = random.nextInt(size);
+        int tarNum = 0;
+        for (int i = 0; i < mDataList.size(); i++) {
+            if (i == 0) {
+                if (randomNum <= i + mDataList.get(i).getWeight() - 1) {
+                    tarNum = i;
+                }
+            } else {
+                if (i - 2 + mDataList.get(i - 1).getWeight() < randomNum && randomNum <= i +
+                        mDataList.get(i).getWeight() - 1) {
+                    tarNum = i;
+                }
+            }
+        }
+        return tarNum;
     }
 
     @OnClick({R.id.btn_sound, R.id.btn_make_sure, R.id.btn_next, R.id.iv_back})
@@ -126,17 +141,26 @@ public class RememberActivity extends BaseActivity {
 
                         String s = mEtWord.getText().toString().trim();
                         mIvStates.setVisibility(View.VISIBLE);
+                        //判断是正确
                         if (s.equals(mWords.getWord())) {
                             mIvStates.setBackgroundResource(R.mipmap.chenggong);
+                            DaoHelper.upDataWord(mWords.getWord(), true);
                         } else {
+                            DaoHelper.upDataWord(mWords.getWord(), false);
                             mIvStates.setBackgroundResource(R.mipmap.shibai);
                         }
 
+                        //判断是否能联网查到翻译，没有就从数据库找出显示
                         if (translate.getExplains() == null) {
-
+                            List<String> explains = new ArrayList<>();
+                            for (int i = 0; i < explains.size(); i++) {
+                                if (mDataList.get(i).getWord().equals(mWords)) {
+                                    explains.add(mDataList.get(i).getExplain());
+                                }
+                            }
+                            mTranslateAdapter.setData(explains);
                         } else {
                             mTranslateAdapter.setData(translate.getExplains());
-
                         }
                     }
 
@@ -162,7 +186,7 @@ public class RememberActivity extends BaseActivity {
             finish();
             return;
         }
-        int i = testRandom1(mDataList.size());
+        int i = testRandom1(DaoHelper.getBook(mBook).getSumWeight());
         mWords = mDataList.get(i);
         mTvWord.setText("");
         mTranslateAdapter.setData(new ArrayList<String>());

@@ -1,4 +1,4 @@
-package com.simon.rememberwords;
+package com.simon.rememberwords.db;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteStatement;
@@ -30,7 +30,9 @@ public class WordDao extends AbstractDao<Word, Long> {
         public final static Property BookName = new Property(3, String.class, "bookName", false, "BOOK_NAME");
         public final static Property RightNum = new Property(4, int.class, "rightNum", false, "RIGHT_NUM");
         public final static Property WrongNum = new Property(5, int.class, "wrongNum", false, "WRONG_NUM");
-        public final static Property Weight = new Property(6, int.class, "weight", false, "WEIGHT");
+        public final static Property RightRate = new Property(6, double.class, "rightRate", false, "RIGHT_RATE");
+        public final static Property WrongRate = new Property(7, double.class, "wrongRate", false, "WRONG_RATE");
+        public final static Property Weight = new Property(8, int.class, "weight", false, "WEIGHT");
     }
 
 
@@ -52,7 +54,9 @@ public class WordDao extends AbstractDao<Word, Long> {
                 "\"BOOK_NAME\" TEXT," + // 3: bookName
                 "\"RIGHT_NUM\" INTEGER NOT NULL ," + // 4: rightNum
                 "\"WRONG_NUM\" INTEGER NOT NULL ," + // 5: wrongNum
-                "\"WEIGHT\" INTEGER NOT NULL );"); // 6: weight
+                "\"RIGHT_RATE\" REAL NOT NULL ," + // 6: rightRate
+                "\"WRONG_RATE\" REAL NOT NULL ," + // 7: wrongRate
+                "\"WEIGHT\" INTEGER NOT NULL );"); // 8: weight
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_WORD_WORD_DESC_BOOK_NAME_DESC ON \"WORD\"" +
                 " (\"WORD\" DESC,\"BOOK_NAME\" DESC);");
@@ -89,7 +93,9 @@ public class WordDao extends AbstractDao<Word, Long> {
         }
         stmt.bindLong(5, entity.getRightNum());
         stmt.bindLong(6, entity.getWrongNum());
-        stmt.bindLong(7, entity.getWeight());
+        stmt.bindDouble(7, entity.getRightRate());
+        stmt.bindDouble(8, entity.getWrongRate());
+        stmt.bindLong(9, entity.getWeight());
     }
 
     @Override
@@ -117,7 +123,9 @@ public class WordDao extends AbstractDao<Word, Long> {
         }
         stmt.bindLong(5, entity.getRightNum());
         stmt.bindLong(6, entity.getWrongNum());
-        stmt.bindLong(7, entity.getWeight());
+        stmt.bindDouble(7, entity.getRightRate());
+        stmt.bindDouble(8, entity.getWrongRate());
+        stmt.bindLong(9, entity.getWeight());
     }
 
     @Override
@@ -134,7 +142,9 @@ public class WordDao extends AbstractDao<Word, Long> {
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // bookName
             cursor.getInt(offset + 4), // rightNum
             cursor.getInt(offset + 5), // wrongNum
-            cursor.getInt(offset + 6) // weight
+            cursor.getDouble(offset + 6), // rightRate
+            cursor.getDouble(offset + 7), // wrongRate
+            cursor.getInt(offset + 8) // weight
         );
         return entity;
     }
@@ -147,7 +157,9 @@ public class WordDao extends AbstractDao<Word, Long> {
         entity.setBookName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setRightNum(cursor.getInt(offset + 4));
         entity.setWrongNum(cursor.getInt(offset + 5));
-        entity.setWeight(cursor.getInt(offset + 6));
+        entity.setRightRate(cursor.getDouble(offset + 6));
+        entity.setWrongRate(cursor.getDouble(offset + 7));
+        entity.setWeight(cursor.getInt(offset + 8));
      }
     
     @Override

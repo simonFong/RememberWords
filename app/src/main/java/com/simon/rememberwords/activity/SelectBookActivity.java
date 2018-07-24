@@ -11,8 +11,9 @@ import com.simon.rememberwords.Common;
 import com.simon.rememberwords.R;
 import com.simon.rememberwords.adapter.MainAdapter;
 import com.simon.rememberwords.base.BaseActivity;
+import com.simon.rememberwords.bean.Book;
 import com.simon.rememberwords.dialog.AddBookNameDialog;
-import com.simon.rememberwords.utils.OtherSpDataHelper;
+import com.simon.rememberwords.utils.DaoHelper;
 import com.simon.rememberwords.weight.Titlerbar;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class SelectBookActivity extends BaseActivity {
     @InjectView(R.id.titlebar)
     Titlerbar mTitlebar;
     private MainAdapter mainAdapter;
-    private List<String> mBookNameList;
+    private List<Book> mBooksList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,8 +54,7 @@ public class SelectBookActivity extends BaseActivity {
                 addBookNameDialog.setOnClickListener(new AddBookNameDialog.OnClickListener() {
                     @Override
                     public void sureClick(String bookname) {
-                        mBookNameList.add(bookname);
-                        OtherSpDataHelper.saveBookNameList(mBookNameList);
+                        DaoHelper.insertBook(bookname);
                         setResult(Common.NEW_BOOK);
                         initData();
                         addBookNameDialog.dismiss();
@@ -65,8 +65,8 @@ public class SelectBookActivity extends BaseActivity {
     }
 
     private void initData() {
-        mBookNameList = OtherSpDataHelper.getBookNameList();
-        mainAdapter.setData(mBookNameList);
+        mBooksList = DaoHelper.getBooksList();
+        mainAdapter.setData(mBooksList);
     }
 
     private void initRecycler() {
@@ -78,7 +78,7 @@ public class SelectBookActivity extends BaseActivity {
             @Override
             public void itemClick(int position) {
                 Intent newIntent = NewWordActivity.getNewIntent(SelectBookActivity.this,
-                        mainAdapter.getItem(position));
+                        mainAdapter.getItem(position).getBookname());
                 startActivity(newIntent);
             }
         });

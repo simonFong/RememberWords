@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.simon.rememberwords.R;
+import com.simon.rememberwords.bean.Book;
 
 import java.util.List;
 
@@ -16,10 +17,10 @@ import java.util.List;
  */
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
-    private List<String> mData;
+    private List<Book> mData;
     private ItemClickListener mItemClickListener;
 
-    public void setData(List<String> data) {
+    public void setData(List<Book> data) {
         this.mData = data;
         notifyDataSetChanged();
     }
@@ -34,7 +35,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.nameTv.setText(mData.get(position));
+        Book book = mData.get(position);
+        holder.nameTv.setText(book.getBookname()+"(通过率为："+book.getPassRate()+")");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,9 +70,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     }
 
-    public String getItem(int position){
-        String s = mData.get(position);
-        return s;
+    public Book getItem(int position){
+        Book book = mData.get(position);
+        return book;
 
     }
 }

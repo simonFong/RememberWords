@@ -11,7 +11,6 @@ import org.greenrobot.greendao.annotation.Index;
  */
 
 
-
 @Entity(
         // Define indexes spanning multiple columns here.
         indexes = {
@@ -27,17 +26,21 @@ public class Word {
     private String bookName;//属于单词本
     private int rightNum;//对的次数
     private int wrongNum;//错的次数
+    private double rightRate;//正确率
+    private double wrongRate;//错误率
     private int weight;//权重
 
-    @Generated(hash = 81518382)
+    @Generated(hash = 1301427588)
     public Word(Long id, String word, String explain, String bookName, int rightNum,
-                int wrongNum, int weight) {
+            int wrongNum, double rightRate, double wrongRate, int weight) {
         this.id = id;
         this.word = word;
         this.explain = explain;
         this.bookName = bookName;
         this.rightNum = rightNum;
         this.wrongNum = wrongNum;
+        this.rightRate = rightRate;
+        this.wrongRate = wrongRate;
         this.weight = weight;
     }
 
@@ -99,6 +102,22 @@ public class Word {
 
     public void setWeight(int weight) {
         this.weight = weight;
+    }
+
+    public double getRightRate() {
+        return this.rightRate;
+    }
+
+    public void setRightRate(double rightRate) {
+        this.rightRate = rightRate;
+    }
+
+    public double getWrongRate() {
+        return this.wrongRate;
+    }
+
+    public void setWrongRate(double wrongRate) {
+        this.wrongRate = wrongRate;
     }
 
 
